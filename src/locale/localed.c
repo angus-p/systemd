@@ -234,10 +234,14 @@ static int process_locale_list_item(
 
                 e++;
 
+                /* loop from here, breaking `e` on `:`s */
+                /* below checking for valid and installed */
                 if (!locale_is_valid(e))
                         return sd_bus_error_setf(error, SD_BUS_ERROR_INVALID_ARGS, "Locale %s is not valid, refusing.", e);
                 if (!use_localegen && locale_is_installed(e) <= 0)
                         return sd_bus_error_setf(error, SD_BUS_ERROR_INVALID_ARGS, "Locale %s not installed, refusing.", e);
+                
+                
                 if (new_locale[p])
                         return sd_bus_error_setf(error, SD_BUS_ERROR_INVALID_ARGS, "Locale variable %s set twice, refusing.", name);
 
